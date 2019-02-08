@@ -1,10 +1,10 @@
 import csv
 
-# Files to load and output (Remember to change these)
+# Files to load and output
 file_to_load = "budget_data.csv"
 file_to_output = "pybank.txt"
 
-# Track various revenue parameters
+# Revenue 
 total_months = 0
 prev_revenue = 0
 month_of_change = []
@@ -13,13 +13,13 @@ greatest_increase = ["", 0]
 greatest_decrease = ["", 9999999999999999999]
 total_revenue = 0
 
-# Read the csv and convert it into a list of dictionaries
+# Read csv and list of dictionaries
 with open(file_to_load) as revenue_data:
     reader = csv.DictReader(revenue_data)
 
     for row in reader:
 
-        # Track the total
+        # Track the total months and revenue
         total_months = total_months + 1
         total_revenue = total_revenue + int(row["Revenue"])
 
