@@ -1,8 +1,8 @@
 import csv
 
 # Files to load and output (Remember to change these)
-file_to_load = "raw_data/budget_data_1.csv"
-file_to_output = "analysis/budget_analysis_1.txt"
+file_to_load = "budget_data.csv"
+file_to_output = "pybank.txt"
 
 # Track various revenue parameters
 total_months = 0
