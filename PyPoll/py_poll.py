@@ -2,8 +2,8 @@
 import csv
 
 # Loading a specific file and output file 
-file_to_load = "election_data.csv"
-file_to_output = "PyPoll.txt"
+file_load = "election_data.csv"
+file_output = "PyPoll.txt"
 
 # Candidate votes and options
 candidate_votes = {}
