@@ -3,7 +3,7 @@ import os
 import csv
 
 file = os.path.join('..', 'Resources', 'budget_data.csv')
-with open('budget_data.csv','r') as csvfile:
+with open('file','r') as csvfile:
     csvreader = csv.reader(csvfile, delimiter = ',')
     header = next(csvreader)
     # Generate empty lists 
