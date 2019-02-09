@@ -1,60 +1,56 @@
+# Reading csv file
+import os
 import csv
 
-# Files to load and output
-file_to_load = "budget_data.csv"
-file_to_output = "pybank.txt"
+file = os.path.join('..', 'Resources', 'budget_data.csv')
+with open('budget_data.csv','r') as csvfile:
+    csvreader = csv.reader(csvfile, delimiter = ',')
+    header = next(csvreader)
+    # Generate empty lists 
+    month_count = []
+    profit = []
+    change_profit = []
+    
+                      
+    # Add values to empty lists
+    for row in csvreader:
+        month_count.append(row[0])
+        profit.append(int(row[1]))
+    for i in range(len(profit)-1):
+        change_profit.append(profit[i+1]-profit[i])
+        
+# Form max and min change of profit to lists
+increase = max(change_profit)
+decrease = min(change_profit)
 
-# Revenue 
-total_months = 0
-prev_revenue = 0
-month_of_change = []
-revenue_change_list = []
-greatest_increase = ["", 0]
-greatest_decrease = ["", 9999999999999999999]
-total_revenue = 0
+#Using the index to a position within an ordered list
+month_increase = change_profit.index(max(change_profit))+1
+month_decrease = change_profit.index(min(change_profit))+1
 
-# Read csv and list of dictionaries
-with open(file_to_load) as revenue_data:
-    reader = csv.DictReader(revenue_data)
+# Print summary
+print("Financial Analysis")
+print("------------------------")
+print(f"Total Months:{len(month_count)}")
+print(f"Total: ${sum(profit)}")
+print(f"Average Change: {round(sum(change_profit)/len(change_profit),2)}")
+print(f"Greatest Increase in Profits: {month_count[month_increase]} (${(str(increase))})")
+print(f"Greatest Decrease in Profits: {month_count[month_decrease]} (${(str(decrease))})")      
 
-    for row in reader:
+# Output to text file
+output = "PyBank.txt"
+with open(output,"w") as new:
+    new.write("Financial Analysis")
+    new.write("\n")
+    new.write("------------------------")
+    new.write("\n")
+    new.write(f"Total Months:{len(month_count)}")
+    new.write("\n")
+    new.write(f"Total: ${sum(profit)}")
+    new.write("\n")
+    new.write(f"Average Change: {round(sum(change_profit)/len(change_profit),2)}")
+    new.write("\n")
+    new.write(f"Greatest Increase in Profits: {month_count[month_increase]} (${(str(increase))})")
+    new.write("\n")
+    new.write(f"Greatest Decrease in Profits: {month_count[month_decrease]} (${(str(decrease))})")
+                    
 
-        # Track the total months and revenue
-        total_months = total_months + 1
-        total_revenue = total_revenue + int(row["Revenue"])
-
-        # Track the revenue change
-        revenue_change = int(row["Revenue"]) - prev_revenue
-        prev_revenue = int(row["Revenue"])
-        revenue_change_list = revenue_change_list + [revenue_change]
-        month_of_change = month_of_change + [row["Date"]]
-
-        # Calculate the greatest increase
-        if (revenue_change > greatest_increase[1]):
-            greatest_increase[0] = row["Date"]
-            greatest_increase[1] = revenue_change
-
-        # Calculate the greatest decrease
-        if (revenue_change < greatest_decrease[1]):
-            greatest_decrease[0] = row["Date"]
-            greatest_decrease[1] = revenue_change
-
-# Calculate the Average Revenue Change
-revenue_avg = sum(revenue_change_list) / len(revenue_change_list)
-
-# Generate Output Summary
-output = (
-    f"\nFinancial Analysis\n"
-    f"----------------------------\n"
-    f"Total Months: {total_months}\n"
-    f"Total Revenue: ${total_revenue}\n"
-    f"Average Revenue Change: ${revenue_avg}\n"
-    f"Greatest Increase in Revenue: {greatest_increase[0]} (${greatest_increase[1]})\n"
-    f"Greatest Decrease in Revenue: {greatest_decrease[0]} (${greatest_decrease[1]})\n")
-
-# Print the output (to terminal)
-print(output)
-
-# Export the results to text file
-with open(file_to_output, "w") as txt_file:
-    txt_file.write(output)
