@@ -3,7 +3,7 @@ import os
 import csv
 
 file = os.path.join('..', 'Resources', 'budget_data.csv')
-print(file)
+
 with open(file,'r') as csvfile:
     csvreader = csv.reader(csvfile, delimiter = ',')
     header = next(csvreader)
